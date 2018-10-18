@@ -9,4 +9,4 @@ package 目录规则：
         .test02  nio
             a1: 基于io方式的server 与client的交互（存在的问题：1.阻塞  2.线程暴增）
                 解决方案：可以使用线程池优化第二点，多余的请求在queue中排队等候。
-
+            a2: 对于nio中buffer的使用
