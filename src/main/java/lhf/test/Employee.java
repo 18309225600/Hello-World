@@ -5,6 +5,16 @@ public class Employee {
     private String name;
     private String gender;
 
+
+    public Employee() {
+    }
+
+    public Employee(Long id, String name, String gender) {
+        this.id = id;
+        this.name = name;
+        this.gender = gender;
+    }
+
     public Long getId() {
         return id;
     }
