@@ -2,10 +2,8 @@ package lhf.test;
 
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -16,13 +14,9 @@ public class StreamApiTest {
     //一共有五种方式产生Stream
 
     //1. 可以通过Collection 提供的 stream() 或者 parallelStream()
-
     //2.通过Arrays 中的静态方法 stream()
-
     //3.通过Stream中的静态方法 of()
-
     //4.通过迭代产生无限流   Stream.iterate(seed,uni)
-
     //5.通过生成产生无限流   Stream.generate(Supplier)
 
 
@@ -54,12 +48,13 @@ public class StreamApiTest {
         min   返回最小的
         */
      //E归约  reduce
-    //收集  collect  Collectors工具类中提供了很多收集器
+     //F收集  collect  Collectors工具类中提供了很多收集器
 
-    List<Employee> employees = Arrays.asList(new Employee(1L,"张三","男"),
-            new Employee(2L,"李四","男"),
-            new Employee(3L,"王五","女"),
-            new Employee(4L,"赵六","女"));
+    List<Employee> employees = Arrays.asList(
+            new Employee(1L,"张三","男",100),
+            new Employee(2L,"李四","男",120),
+            new Employee(3L,"王五","女",320),
+            new Employee(4L,"赵六","女",145));
 
 
     //中间操作没有任何结果 “惰性求职”
@@ -98,11 +93,47 @@ public class StreamApiTest {
         return cs.stream();
     }
 
+    //归约
     @Test
     public void testE(){
         Optional<Long> reduce = employees.stream().map(e -> e.getId()).reduce(Long::sum);
         System.out.println(reduce.get());
+
+        List<Integer> list = Arrays.asList(1,2,3,4,5,6,7,8,9,0);
+        Optional<Integer> sum = list.stream().reduce((x, y) -> x + y);
+        System.out.println(sum.get());
+
     }
+
+    //收集
+    @Test
+    public void testF(){
+        List<String> collect = employees.stream().map(e -> e.getName()).collect(Collectors.toList());
+        System.out.println(collect);
+
+        //收集集合总数
+        Long count= employees.stream().collect(Collectors.counting());
+        System.out.println("count="+count);
+
+        //工资平均值
+        Double avg = employees.stream().collect(Collectors.averagingDouble(Employee::getSalary));
+        System.out.println(avg);
+
+        //工资总和
+        Double sum = employees.stream().collect(Collectors.summingDouble(Employee::getSalary));
+        System.out.println(sum);
+
+        //工资谁最高
+        Optional<Employee> maxSalary = employees.stream().collect(Collectors.maxBy((e1, e2) -> Double.compare(e1.getSalary(), e2.getSalary())));
+        System.out.println(maxSalary.get());
+
+        DoubleSummaryStatistics sta = employees.stream().collect(Collectors.summarizingDouble(Employee::getSalary));
+        double max = sta.getMax();
+
+
+
+    }
+
     @Test
     public void Test1(){
         //Collection的stream方法

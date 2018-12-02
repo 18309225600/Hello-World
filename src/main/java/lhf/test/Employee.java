@@ -4,15 +4,26 @@ public class Employee {
     private Long id;
     private String name;
     private String gender;
+    private double salary;
 
 
     public Employee() {
     }
 
-    public Employee(Long id, String name, String gender) {
+    public Employee(Long id, String name, String gender,double salary) {
         this.id = id;
         this.name = name;
         this.gender = gender;
+        this.salary = salary;
+    }
+
+
+    public double getSalary() {
+        return salary;
+    }
+
+    public void setSalary(double salary) {
+        this.salary = salary;
     }
 
     public Long getId() {
@@ -45,6 +56,7 @@ public class Employee {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", gender='" + gender + '\'' +
+                ", salary=" + salary +
                 '}';
     }
 }
