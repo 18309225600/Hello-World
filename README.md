@@ -4,3 +4,7 @@ package 目录规则：
 
     lhf.test01： 设计模式
         a1 : 设计原则01-单一职责demo
+
+
+    lhf.test02：java并发编程实战练习
+        a1:第一章
